@@ -1,24 +1,38 @@
 import React from "react";
 import spotify from "../api/spotify";
+import TypeSelector from "./TypeSelector";
+import TimeRangeSelector from "./TimeRangeSelector";
 
 class BubblesList extends React.Component {
 
-  state = { type:"tracks", data: [] }
+  state = { type:"artists", time_range: 'medium_term', data: [] }
 
-  getData = async (type) => {
+  // API call to spotify API
+  getData = async (type, time_range) => {
     const response = await spotify.get(`/v1/me/top/${type}`,{
       headers: {Authorization: 'Bearer ' + this.props.token },
-      params: {limit: 10, time_range:'medium_term'}
+      params: {limit: 10, time_range: time_range}
     })
-    this.setState({ type:type, data:response.data.items });
+    console.log(response)
+    this.setState({ type:type, time_range:time_range, data:response.data.items });
   }
 
+  // Callback functions for type and time range selectors
+  onTypeSelect = (type) => {
+    this.getData(type, this.state.time_range);
+  }
+
+  onTimeRangeSelect = (time_range) => {
+    this.getData(this.state.type, time_range);
+  }
+
+  // Lifecycle methods
   componentDidMount() {
-    this.getData(this.state.type);
+    this.getData(this.state.type, this.state.time_range);
   }
 
+  // Helper function to render bubbles
   renderList(){
-    console.log(this.state.data)
     return this.state.data.map(item => {
       return (
         <div className="item" key={item.id}>
@@ -34,9 +48,12 @@ class BubblesList extends React.Component {
     this.renderList();
     return (
       <div className="ui container">
-        <div>
-          <button className="ui button">Artists</button>
-          <button className="ui button">Tracks</button>
+        <div className="ui secondary pointing menu">        
+          <TypeSelector type={this.state.type} onTypeSelect={this.onTypeSelect} />
+
+          <div className="right menu">
+            <TimeRangeSelector time_range={this.state.time_range} onTimeRangeSelect={this.onTimeRangeSelect} />
+          </div>
         </div>
         <div className="ui relaxed divided list">
           {this.renderList()}
