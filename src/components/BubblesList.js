@@ -2,10 +2,10 @@ import React from "react";
 import spotify from "../api/spotify";
 import TypeSelector from "./TypeSelector";
 import TimeRangeSelector from "./TimeRangeSelector";
-
+import Bubble from "./Bubble";
 class BubblesList extends React.Component {
 
-  state = { type:"artists", time_range: 'medium_term', data: [] }
+  state = { type:"tracks", time_range: 'medium_term', data: [] }
 
   // API call to spotify API
   getData = async (type, time_range) => {
@@ -36,9 +36,7 @@ class BubblesList extends React.Component {
     return this.state.data.map(item => {
       return (
         <div className="item" key={item.id}>
-          <div className="content">
-            <div className="header">{item.name}</div>
-          </div>
+          <Bubble data={item}/>
         </div>
       );
     });
