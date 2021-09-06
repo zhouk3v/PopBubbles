@@ -1,6 +1,7 @@
 import React from 'react';
 
 import BubblesList from './BubblesList';
+import './App.css'
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 
@@ -40,12 +41,14 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
         {!this.state.token && (
-          <a
-            className="btn btn--loginApp-link"
-            href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}
-          >
-            Login to Spotify
-          </a>
+          <div id='login'> 
+            <a
+              className="btn btn--loginApp-link"
+              href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}
+            >
+              Login to Spotify
+            </a>
+          </div>
         )}
         {this.state.token && (
           <BubblesList token={this.state.token} />

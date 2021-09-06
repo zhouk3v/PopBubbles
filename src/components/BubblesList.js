@@ -44,7 +44,6 @@ class BubblesList extends React.Component {
   }
 
   render(){
-    this.renderList();
     return (
       <div className="background">
         <div className="ui container">
