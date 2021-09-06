@@ -2,7 +2,9 @@ import React from 'react'
 
 const TimeRangeSelector = (props) => {
   const onTimeRangeSelect = (time_range) => {
-    props.onTimeRangeSelect(time_range)
+    if(props.time_range !== time_range) { //Prevent an additional API call if the already selected button is clicked again
+      props.onTimeRangeSelect(time_range)
+    }
   }
 
   return (

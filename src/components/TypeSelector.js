@@ -2,7 +2,9 @@ import React from 'react'
 
 const TypeSelector = (props) => {
   const onTypeSelect = (type) => {
-    props.onTypeSelect(type)
+    if(props.type !== type){ //Prevent an additional API call if the already selected button is clicked again
+      props.onTypeSelect(type)
+    }
   }
 
   return (

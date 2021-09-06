@@ -3,6 +3,8 @@ import spotify from "../api/spotify";
 import TypeSelector from "./TypeSelector";
 import TimeRangeSelector from "./TimeRangeSelector";
 import Bubble from "./Bubble";
+import './BubblesList.css'
+
 class BubblesList extends React.Component {
 
   state = { type:"tracks", time_range: 'medium_term', data: [] }
@@ -11,9 +13,8 @@ class BubblesList extends React.Component {
   getData = async (type, time_range) => {
     const response = await spotify.get(`/v1/me/top/${type}`,{
       headers: {Authorization: 'Bearer ' + this.props.token },
-      params: {limit: 10, time_range: time_range}
+      params: {limit: 20, time_range: time_range}
     })
-    console.log(response)
     this.setState({ type:type, time_range:time_range, data:response.data.items });
   }
 
@@ -35,7 +36,7 @@ class BubblesList extends React.Component {
   renderList(){
     return this.state.data.map(item => {
       return (
-        <div className="item" key={item.id}>
+        <div id="child" className="item" key={item.id}>
           <Bubble data={item}/>
         </div>
       );
@@ -45,16 +46,18 @@ class BubblesList extends React.Component {
   render(){
     this.renderList();
     return (
-      <div className="ui container">
-        <div className="ui secondary pointing menu">        
-          <TypeSelector type={this.state.type} onTypeSelect={this.onTypeSelect} />
+      <div className="background">
+        <div className="ui container">
+          <div className="ui secondary pointing menu">        
+            <TypeSelector type={this.state.type} onTypeSelect={this.onTypeSelect} />
 
-          <div className="right menu">
-            <TimeRangeSelector time_range={this.state.time_range} onTimeRangeSelect={this.onTimeRangeSelect} />
+            <div className="right menu">
+              <TimeRangeSelector time_range={this.state.time_range} onTimeRangeSelect={this.onTimeRangeSelect} />
+            </div>
           </div>
-        </div>
-        <div className="ui relaxed divided list">
-          {this.renderList()}
+          <div className="ui relaxed list">
+            {this.renderList()}
+          </div>
         </div>
       </div>
     )
