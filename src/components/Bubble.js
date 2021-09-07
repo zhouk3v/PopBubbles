@@ -1,6 +1,6 @@
 import React from 'react'
 import handleViewport from 'react-in-viewport'
-import Bounce from 'react-reveal/Bounce'
+import { Zoom } from 'react-awesome-reveal'
 
 import './css/Bubble.css'
 
@@ -15,7 +15,7 @@ const Bubble = (props) => {
   }
   
   return (
-    <Bounce bottom>
+    <Zoom direction="bottom">
       <div className="bubble" onClick={() => console.log(props.data.name)}>
         <img
           alt={image_alt}
@@ -25,7 +25,7 @@ const Bubble = (props) => {
         <h1 ref={forwardedRef}>{props.data.name}</h1>
         <p>{props.data.type === 'track' ? props.data.artists[0].name : null}</p>
       </div>
-    </Bounce>
+    </Zoom>
   )
 }
 
