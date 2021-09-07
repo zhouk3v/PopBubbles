@@ -1,19 +1,21 @@
 import React from "react";
+import { CSSTransition } from 'react-transition-group';
+
 import spotify from "../api/spotify";
 import TypeSelector from "./TypeSelector";
 import TimeRangeSelector from "./TimeRangeSelector";
 import Bubble from "./Bubble";
-import './BubblesList.css'
+import './css/BubblesList.css'
 
 class BubblesList extends React.Component {
 
-  state = { type:"tracks", time_range: 'medium_term', data: [] }
+  state = { type:"artists", time_range: 'medium_term', data: [] }
 
   // API call to spotify API
   getData = async (type, time_range) => {
     const response = await spotify.get(`/v1/me/top/${type}`,{
       headers: {Authorization: 'Bearer ' + this.props.token },
-      params: {limit: 20, time_range: time_range}
+      params: {limit: 50, time_range: time_range}
     })
     this.setState({ type:type, time_range:time_range, data:response.data.items });
   }
@@ -34,9 +36,10 @@ class BubblesList extends React.Component {
 
   // Helper function to render bubbles
   renderList(){
+    console.log(this.state.data)
     return this.state.data.map(item => {
       return (
-        <div id="child" className="item" key={item.id}>
+        <div id="child" key={item.id}>
           <Bubble data={item}/>
         </div>
       );
@@ -49,10 +52,14 @@ class BubblesList extends React.Component {
         <div className="ui container">
           <div className="ui secondary pointing menu">        
             <TypeSelector type={this.state.type} onTypeSelect={this.onTypeSelect} />
-
             <div className="right menu">
               <TimeRangeSelector time_range={this.state.time_range} onTimeRangeSelect={this.onTimeRangeSelect} />
             </div>
+          </div>
+          <div className="header">
+            <h1>
+              Your top {this.state.type}
+            </h1>
           </div>
           <div className="ui relaxed list">
             {this.renderList()}

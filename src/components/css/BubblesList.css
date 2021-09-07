@@ -5,6 +5,17 @@
   display: flex;
 }
 
+.header {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header h1{
+  font-size: 64px;
+  color: #FFFFFF
+}
+
 #child {
   display:flex;
   justify-content: center;

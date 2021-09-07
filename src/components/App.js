@@ -1,7 +1,7 @@
 import React from 'react';
 
 import BubblesList from './BubblesList';
-import './App.css'
+import './css/App.css'
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 
