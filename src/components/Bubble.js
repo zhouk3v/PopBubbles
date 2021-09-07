@@ -1,30 +1,34 @@
-import React, { useRef }from 'react'
-import useOnScreen from './useIntersection'
+import React from 'react'
+import handleViewport from 'react-in-viewport'
+import Bounce from 'react-reveal/Bounce'
 
 import './css/Bubble.css'
 
 
-const Bubble = ({ data }) => {
-  const image = data.type === 'artist' ? data.images[1].url : data.album.images[1].url
-  const image_alt = data.type === 'artist' ? data.name : data.album.name
-  const ref = useRef();
-  const isVisible = useOnScreen(ref)
+const Bubble = (props) => {
+  const image = props.data.type === 'artist' ? props.data.images[1].url : props.data.album.images[1].url
+  const image_alt = props.data.type === 'artist' ? props.data.name : props.data.album.name
 
-  if(isVisible) {
-    console.log(`${data.name} is in viewport`)
+  const { inViewport, forwardedRef, enterCount} = props;
+  if(inViewport && enterCount === 1){
+    console.log(props.data.name);
   }
-
+  
   return (
-    <div className="bubble" onClick={() => console.log(data.name)}>
-      <img
-        alt={image_alt}
-        className="ui image"
-        src={image}
-      />
-      <h1 ref={ref}>{data.name}</h1>
-      <p>{data.type === 'track' ? data.artists[0].name : null}</p>
-    </div>
+    <Bounce bottom>
+      <div className="bubble" onClick={() => console.log(props.data.name)}>
+        <img
+          alt={image_alt}
+          className="ui image"
+          src={image}
+        />
+        <h1 ref={forwardedRef}>{props.data.name}</h1>
+        <p>{props.data.type === 'track' ? props.data.artists[0].name : null}</p>
+      </div>
+    </Bounce>
   )
 }
 
-export default Bubble;
+const ViewportBubble = handleViewport(Bubble);
+
+export default ViewportBubble;

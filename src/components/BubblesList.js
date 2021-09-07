@@ -1,10 +1,9 @@
 import React from "react";
-import { CSSTransition } from 'react-transition-group';
 
 import spotify from "../api/spotify";
 import TypeSelector from "./TypeSelector";
 import TimeRangeSelector from "./TimeRangeSelector";
-import Bubble from "./Bubble";
+import ViewportBubble from "./Bubble";
 import './css/BubblesList.css'
 
 class BubblesList extends React.Component {
@@ -15,7 +14,7 @@ class BubblesList extends React.Component {
   getData = async (type, time_range) => {
     const response = await spotify.get(`/v1/me/top/${type}`,{
       headers: {Authorization: 'Bearer ' + this.props.token },
-      params: {limit: 50, time_range: time_range}
+      params: {limit: 20, time_range: time_range}
     })
     this.setState({ type:type, time_range:time_range, data:response.data.items });
   }
@@ -40,7 +39,7 @@ class BubblesList extends React.Component {
     return this.state.data.map(item => {
       return (
         <div id="child" key={item.id}>
-          <Bubble data={item}/>
+          <ViewportBubble data={item}/>
         </div>
       );
     });
