@@ -3,7 +3,7 @@ import React from "react";
 import spotify from "../api/spotify";
 import TypeSelector from "./TypeSelector";
 import TimeRangeSelector from "./TimeRangeSelector";
-import ViewportBubble from "./Bubble";
+import Bubble from "./Bubble";
 import './css/BubblesList.css'
 
 class BubblesList extends React.Component {
@@ -39,7 +39,7 @@ class BubblesList extends React.Component {
     return this.state.data.map(item => {
       return (
         <div id="child" key={item.id}>
-          <ViewportBubble data={item}/>
+          <Bubble data={item}/>
         </div>
       );
     });
