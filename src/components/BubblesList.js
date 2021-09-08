@@ -8,7 +8,7 @@ import './css/BubblesList.css'
 
 class BubblesList extends React.Component {
 
-  state = { type:"artists", time_range: 'medium_term', data: [] }
+  state = { type:"tracks", time_range: 'medium_term', data: [] }
 
   // API call to spotify API
   getData = async (type, time_range) => {

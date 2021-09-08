@@ -10,24 +10,31 @@ const Bubble = ({ data }) => {
   const image_alt = data.type === 'artist' ? data.name : data.album.name
 
   //audio player stuff
-  const [audioUrl, setAudioUrl] = useState('')
-  const [hover, setHover] = useState(false)
+  const [audio, setAudio] = useState(null)
   const [playing, setPlaying] = useState(false)
-  const audio = data.type === 'track' ? new Audio(data.preview_url) : null
+
+  useEffect(() => {
+    if(data.type === 'artist'){
+    } else {
+      setAudio(new Audio(data.preview_url));
+    }
+  }, [])
+
+  useEffect(() => {
+    if(data.type === 'track' && audio){
+      playing ? audio.play() : audio.pause()
+    }
+  }, [playing])
 
   return (
     <Zoom direction="bottom">
       <div 
         className="bubble" 
         onMouseEnter={() => {
-          if(audio) {
-            audio.play()
-          }
+          setPlaying(true)
         }}
         onMouseLeave={() => {
-          if(audio) {
-            audio.pause()
-          }
+          setPlaying(false)
         }}
       >
         <img
