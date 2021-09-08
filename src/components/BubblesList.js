@@ -14,7 +14,7 @@ class BubblesList extends React.Component {
   getData = async (type, time_range) => {
     const response = await spotify.get(`/v1/me/top/${type}`,{
       headers: {Authorization: 'Bearer ' + this.props.token },
-      params: {limit: 20, time_range: time_range}
+      params: {limit: 10, time_range: time_range}
     })
     this.setState({ type:type, time_range:time_range, data:response.data.items });
   }
@@ -35,7 +35,6 @@ class BubblesList extends React.Component {
 
   // Helper function to render bubbles
   renderList(){
-    console.log(this.state.data)
     return this.state.data.map(item => {
       return (
         <div id="child" key={item.id}>
