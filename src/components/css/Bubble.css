@@ -24,7 +24,8 @@
 }
 
 .bubble p {
-  font-size: 0.75vw;
+  width: 400px;
+  font-size: 0.80vw;
   color: #FFFFFF
 }
 

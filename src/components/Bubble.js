@@ -10,7 +10,7 @@ const Bubble = ({ data, token }) => {
   const image = data.type === 'artist' ? data.images[1].url : data.album.images[1].url
   const image_alt = data.type === 'artist' ? data.name : data.album.name
 
-  const[song, setPlaying] = useAudio(data, token)
+  const[songPlaying, setPlaying] = useAudio(data, token)
 
   return (
     <Zoom direction="bottom">
@@ -30,6 +30,7 @@ const Bubble = ({ data, token }) => {
         />
         <h1>{data.name}</h1>
         <p>{data.type === 'track' ? data.artists[0].name : null}</p>
+        <p>{data.type === 'artist' &&  songPlaying.playing ? `Now Playing: ${songPlaying.song}` : null}</p>
       </div>
     </Zoom>
   )

@@ -16,6 +16,11 @@ const useAudio = (data, token) => {
     return response.data.tracks[0]
   }
 
+  const stop = () => {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+
   useEffect(() => {
     if(data.type === 'artist') {
       getArtistTopTrack().then(track => {
@@ -27,15 +32,16 @@ const useAudio = (data, token) => {
     }
   }, [data])
 
+
   useEffect(() => {
     if(audio){
-      playing ? audio.play() : audio.pause()
+      playing ? audio.play() : stop()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing])
 
 
-  return [song, setPlaying];
+  return [{song: song, playing: playing}, setPlaying];
 }
 
 export default useAudio;

@@ -56,7 +56,7 @@ class BubblesList extends React.Component {
           </div>
           <div className="header">
             <h1>
-              Your top {this.state.type}
+              Your top 10 {this.state.type}
             </h1>
           </div>
           <div className="ui relaxed list">
