@@ -1,30 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
+import useAudio from '../hooks/useAudio'
 import { Zoom } from 'react-awesome-reveal'
 
 import './css/Bubble.css'
 
 
-const Bubble = ({ data }) => {
+const Bubble = ({ data, token }) => {
   // image data
   const image = data.type === 'artist' ? data.images[1].url : data.album.images[1].url
   const image_alt = data.type === 'artist' ? data.name : data.album.name
 
-  //audio player stuff
-  const [audio, setAudio] = useState(null)
-  const [playing, setPlaying] = useState(false)
-
-  useEffect(() => {
-    if(data.type === 'artist'){
-    } else {
-      setAudio(new Audio(data.preview_url));
-    }
-  }, [])
-
-  useEffect(() => {
-    if(data.type === 'track' && audio){
-      playing ? audio.play() : audio.pause()
-    }
-  }, [playing])
+  const[song, setPlaying] = useAudio(data, token)
 
   return (
     <Zoom direction="bottom">

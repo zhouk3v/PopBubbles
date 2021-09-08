@@ -38,7 +38,7 @@ class BubblesList extends React.Component {
     return this.state.data.map(item => {
       return (
         <div id="child" key={item.id}>
-          <Bubble data={item}/>
+          <Bubble data={item} token = {this.props.token}/>
         </div>
       );
     });
