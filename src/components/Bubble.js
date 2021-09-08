@@ -10,7 +10,11 @@ const Bubble = (props) => {
 
   return (
     <Zoom direction="bottom">
-      <div className="bubble" onClick={() => console.log(props.data.name)}>
+      <div 
+        className="bubble" 
+        onMouseEnter={() => {console.log(props.data.name + ' enter')}}
+        onMouseLeave={() => {console.log(props.data.name + ' exit')}}
+      >
         <img
           alt={image_alt}
           className="ui image"
