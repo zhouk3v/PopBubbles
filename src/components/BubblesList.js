@@ -8,9 +8,10 @@ import './css/BubblesList.css'
 
 class BubblesList extends React.Component {
 
-  state = { type:"tracks", time_range: 'medium_term', data: [] }
+  // Set state to default values in Spotify API documentation
+  state = { type:"artists", time_range: 'medium_term', data: [] }
 
-  // API call to spotify API
+  // Call to spotify API
   getData = async (type, time_range) => {
     const response = await spotify.get(`/v1/me/top/${type}`,{
       headers: {Authorization: 'Bearer ' + this.props.token },
@@ -56,7 +57,7 @@ class BubblesList extends React.Component {
           </div>
           <div className="header">
             <h1>
-              Your top 10 {this.state.type}
+              Your top {this.state.data.length} {this.state.type}
             </h1>
           </div>
           <div className="ui relaxed list">

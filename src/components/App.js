@@ -41,7 +41,9 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
         {!this.state.token && (
-          <div id='login'> 
+          <div id='login'>
+            <h1>PopBubbles</h1>
+            <p>View your top artists and top tracks overtime. Anytime, Anywhere</p>
             <a
               className="btn btn--loginApp-link"
               href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}

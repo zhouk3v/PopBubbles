@@ -14,19 +14,19 @@ const TimeRangeSelector = (props) => {
         className={`ui button ${props.time_range === 'short_term' ? 'primary' : null}`} 
         onClick={() => onTimeRangeSelect('short_term')}
       >
-        Short Term
+        Last 4 weeks
       </button>
       <button 
         className={`ui button ${props.time_range === 'medium_term' ? 'primary' : null}`} 
         onClick={() => onTimeRangeSelect('medium_term')}
       >
-        Medium Term
+        Last 6 months
       </button>
       <button 
         className={`ui button ${props.time_range === 'long_term' ? 'primary' : null}`} 
         onClick={() => onTimeRangeSelect('long_term')}
       >
-        Long Term
+        All time
       </button>
     </div>
   );

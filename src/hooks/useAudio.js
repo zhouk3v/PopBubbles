@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import spotify from '../api/spotify';
 
 const useAudio = (data, token) => {
-  const [song, setSong] = useState('')
+  const [song, setSong] = useState('') // return song in object
   const [audio, setAudio] = useState(null) //internal only
-  const [playing, setPlaying] = useState(false) // return playing and setPlaying
+  const [playing, setPlaying] = useState(false) // return playing in object and setPlaying
 
   const getArtistTopTrack = async () => {
     const id = data.id
@@ -18,7 +18,7 @@ const useAudio = (data, token) => {
 
   const stop = () => {
     audio.pause();
-    audio.currentTime = 0;
+    audio.currentTime = 0; //Reset the sample
   }
 
   useEffect(() => {

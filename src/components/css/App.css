@@ -1,11 +1,29 @@
+html, body, body > div, .App {
+  height: 100%;
+}
+
 #login {
+  background: linear-gradient(#F49F0A,#EFCA08);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  height: 100% !important;
+}
+
+#login h1 {
+  color: #ffffff;
+}
+
+#login p {
+  color: #ffffff;
 }
 
 #login a {
   background: #1DB954;
   color: #FFFFFF;
   padding: 10px;
+  border: none;
+  border-radius: 100px 100px 100px 100px;
 }

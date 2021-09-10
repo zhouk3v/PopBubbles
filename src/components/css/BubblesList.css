@@ -16,6 +16,10 @@
   color: #FFFFFF
 }
 
+.container {
+  padding-bottom: 20px;
+}
+
 #child {
   display:flex;
   justify-content: center;
