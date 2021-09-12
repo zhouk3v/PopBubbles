@@ -37,6 +37,7 @@ const useAudio = (data, token) => {
 
 
   useEffect(() => {
+    console.log(data);
     if(audio){
       playing ? audio.play() : stop()
     }
