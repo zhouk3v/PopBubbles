@@ -13,6 +13,7 @@ const useAudio = (data, token) => {
       headers: {Authorization: 'Bearer ' + token},
       params: {market: 'US'}
     })
+    console.log(response)
     return response.data.tracks[0]
   }
 
