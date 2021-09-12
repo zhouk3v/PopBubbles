@@ -35,25 +35,24 @@ class BubblesList extends React.Component {
   }
 
   // Helper function to render bubbles
-  renderList(){
+  renderList() {
     return this.state.data.map(item => {
       return (
         <div id="child" key={item.id}>
+          {/* TODO: Consider passing token to bubbles with context */}
           <Bubble data={item} token = {this.props.token}/>
         </div>
       );
     });
   }
 
-  render(){
+  render() {
     return (
       <div className="background">
         <div className="ui container">
-          <div className="ui secondary pointing menu">        
+          <div className="selectors">        
             <TypeSelector type={this.state.type} onTypeSelect={this.onTypeSelect} />
-            <div className="right menu">
-              <TimeRangeSelector time_range={this.state.time_range} onTimeRangeSelect={this.onTimeRangeSelect} />
-            </div>
+            <TimeRangeSelector time_range={this.state.time_range} onTimeRangeSelect={this.onTimeRangeSelect} />
           </div>
           <div className="header">
             <h1>

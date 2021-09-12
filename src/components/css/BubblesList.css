@@ -1,3 +1,17 @@
+#child {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#child:nth-child(2n+0) {
+  justify-content: right;
+}
+
+#child:nth-child(4n+0) {
+  justify-content: left;
+}
+
 .background {
   background: linear-gradient(#F49F0A,#EFCA08)
 }
@@ -20,16 +34,8 @@
   padding-bottom: 20px;
 }
 
-#child {
-  display:flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#child:nth-child(2n+0) {
-  justify-content: right;
-}
-
-#child:nth-child(4n+0) {
-  justify-content: left;
+.selectors {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
 }

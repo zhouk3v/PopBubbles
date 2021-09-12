@@ -23,6 +23,7 @@ const useAudio = (data, token) => {
 
   useEffect(() => {
     if(data.type === 'artist') {
+      //TODO: refactor this then keyword with async and await
       getArtistTopTrack().then(track => {
         setSong(track.name)
         setAudio(new Audio(track.preview_url));
