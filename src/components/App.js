@@ -6,7 +6,9 @@ import './css/App.css'
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 
 const clientId = "ffa134402f974b84b32367f0e4a7babb";
-const redirectUri = "http://localhost:3000/";
+// Switch to localhost when testing locally
+//const redirectUri = "http://localhost:3000/";
+const redirectUri = "https://upbeat-meninsky-7a86df.netlify.app";
 const scopes = [
   "user-top-read"
 ]
