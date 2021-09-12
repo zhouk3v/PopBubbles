@@ -31,6 +31,7 @@ const useAudio = (data, token) => {
     } else {
       setAudio(new Audio(data.preview_url));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
 
