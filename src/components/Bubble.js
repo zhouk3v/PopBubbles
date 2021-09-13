@@ -13,7 +13,7 @@ const Bubble = ({ data, token }) => {
   const[songPlaying, setPlaying] = useAudio(data, token)
 
   return (
-    <Zoom direction="bottom">
+    <Zoom direction="bottom" fraction={0.25}>
       <div 
         className="bubble" 
         onMouseEnter={() => {
