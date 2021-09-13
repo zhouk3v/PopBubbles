@@ -40,7 +40,7 @@ class BubblesList extends React.Component {
       return (
         <div id="child" key={item.id}>
           {/* TODO: Consider passing token to bubbles with context */}
-          <Bubble data={item} token = {this.props.token}/>
+          <Bubble data={item}/>
         </div>
       );
     });
