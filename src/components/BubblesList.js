@@ -4,30 +4,33 @@ import spotify from "../api/spotify";
 import TypeSelector from "./TypeSelector";
 import TimeRangeSelector from "./TimeRangeSelector";
 import Bubble from "./Bubble";
-import './css/BubblesList.css'
+import "./css/BubblesList.css";
 
 class BubblesList extends React.Component {
-
   // Set state to default values in Spotify API documentation
-  state = { type:"artists", time_range: 'medium_term', data: [] }
+  state = { type: "artists", time_range: "medium_term", data: [] };
 
   // Call to spotify API
   getData = async (type, time_range) => {
-    const response = await spotify.get(`/v1/me/top/${type}`,{
-      headers: {Authorization: 'Bearer ' + this.props.token },
-      params: {limit: 10, time_range: time_range}
-    })
-    this.setState({ type:type, time_range:time_range, data:response.data.items });
-  }
+    const response = await spotify.get(`/v1/me/top/${type}`, {
+      headers: { Authorization: "Bearer " + this.props.token },
+      params: { limit: 10, time_range: time_range },
+    });
+    this.setState({
+      type: type,
+      time_range: time_range,
+      data: response.data.items,
+    });
+  };
 
   // Callback functions for type and time range selectors
   onTypeSelect = (type) => {
     this.getData(type, this.state.time_range);
-  }
+  };
 
   onTimeRangeSelect = (time_range) => {
     this.getData(this.state.type, time_range);
-  }
+  };
 
   // Lifecycle methods
   componentDidMount() {
@@ -36,11 +39,11 @@ class BubblesList extends React.Component {
 
   // Helper function to render bubbles
   renderList() {
-    return this.state.data.map(item => {
+    return this.state.data.map((item) => {
       return (
         <div id="child" key={item.id}>
           {/* TODO: Consider passing token to bubbles with context */}
-          <Bubble data={item} token={this.props.token}/>
+          <Bubble data={item} token={this.props.token} />
         </div>
       );
     });
@@ -50,21 +53,25 @@ class BubblesList extends React.Component {
     return (
       <div className="background">
         <div className="ui container">
-          <div className="selectors">        
-            <TypeSelector type={this.state.type} onTypeSelect={this.onTypeSelect} />
-            <TimeRangeSelector time_range={this.state.time_range} onTimeRangeSelect={this.onTimeRangeSelect} />
+          <div className="selectors">
+            <TypeSelector
+              type={this.state.type}
+              onTypeSelect={this.onTypeSelect}
+            />
+            <TimeRangeSelector
+              time_range={this.state.time_range}
+              onTimeRangeSelect={this.onTimeRangeSelect}
+            />
           </div>
           <div className="header">
             <h1>
               Your top {this.state.data.length} {this.state.type}
             </h1>
           </div>
-          <div className="ui relaxed list">
-            {this.renderList()}
-          </div>
+          <div className="ui relaxed list">{this.renderList()}</div>
         </div>
       </div>
-    )
+    );
   }
 }
 
