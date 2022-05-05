@@ -1,3 +1,5 @@
+// TODO: Add in error handing for API calls
+
 import React from "react";
 import crypto from "crypto";
 
@@ -67,7 +69,7 @@ class App extends React.Component {
 
     const json = await res.json();
 
-    // Store the token into local storage
+    // Store the access token and refresh token into local storage
     localStorage.setItem("accesstoken", json.access_token);
 
     // Clear the url search params
@@ -87,6 +89,7 @@ class App extends React.Component {
         this.setState({ validState: false });
       } else {
         this.generateNewToken(code);
+        this.setState({ tokenExists: true });
       }
     } else {
       // Generate a state string and store it in sessionStorage so we can verify it after we get redirected back from spotify
@@ -137,6 +140,7 @@ class App extends React.Component {
           {this.state.validState && this.state.tokenExists && (
             <BubblesList token={this.token} />
           )}
+          {/* TODO: create a shim page here to handle the time between setting tokenExists to true and actually getting the token */}
         </header>
       </div>
     );
