@@ -5,6 +5,8 @@ import TypeSelector from "./TypeSelector";
 import TimeRangeSelector from "./TimeRangeSelector";
 import Bubble from "./Bubble";
 import "./css/BubblesList.css";
+import "./css/Button.css";
+import { toHaveStyle } from "@testing-library/jest-dom/dist/matchers";
 
 class BubblesList extends React.Component {
   // Set state to default values in Spotify API documentation
@@ -42,7 +44,6 @@ class BubblesList extends React.Component {
     return this.state.data.map((item) => {
       return (
         <div id="child" key={item.id}>
-          {/* TODO: Consider passing token to bubbles with context */}
           <Bubble data={item} token={this.props.token} />
         </div>
       );
@@ -62,6 +63,14 @@ class BubblesList extends React.Component {
               time_range={this.state.time_range}
               onTimeRangeSelect={this.onTimeRangeSelect}
             />
+            <button
+              className="ui button primary"
+              onClick={() => {
+                this.props.logout();
+              }}
+            >
+              Log Out
+            </button>
           </div>
           <div className="header">
             <h1>

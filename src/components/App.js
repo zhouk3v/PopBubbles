@@ -140,6 +140,11 @@ class App extends React.Component {
     localStorage.setItem("expiresin", json.expires_in);
   }
 
+  logout() {
+    localStorage.clear();
+    window.location.reload();
+  }
+
   render() {
     return (
       <div className="App">
@@ -170,7 +175,7 @@ class App extends React.Component {
             </div>
           )}
           {this.state.validState && this.state.tokenExists && (
-            <BubblesList token={this.token} />
+            <BubblesList token={this.token} logout={this.logout} />
           )}
           {/* TODO: create a shim page here to handle the time between setting tokenExists to true and actually getting the token */}
         </header>
