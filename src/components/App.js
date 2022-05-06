@@ -15,16 +15,16 @@ const redirectUri = "http://localhost:3000/";
 const scopes = ["user-top-read"];
 
 class App extends React.Component {
-  token = localStorage.getItem("accesstoken");
+  token = null;
   state = {
-    tokenExists: this.token ? true : false,
-    stateValid: false,
+    tokenExists: false,
     urlState: null,
     codeChallenge: null,
     validState: true,
   };
 
   async componentDidMount() {
+    this.token = localStorage.getItem("accesstoken");
     if (this.token === null) {
       // Start the process of requesting a new token through PKCE authorization flow
       await this.handleRedirect();
