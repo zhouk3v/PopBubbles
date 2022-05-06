@@ -6,7 +6,6 @@ import TimeRangeSelector from "./TimeRangeSelector";
 import Bubble from "./Bubble";
 import "./css/BubblesList.css";
 import "./css/Button.css";
-import { toHaveStyle } from "@testing-library/jest-dom/dist/matchers";
 
 class BubblesList extends React.Component {
   // Set state to default values in Spotify API documentation

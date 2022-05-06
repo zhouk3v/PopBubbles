@@ -15,17 +15,14 @@ const redirectUri = "http://localhost:3000/";
 const scopes = ["user-top-read"];
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.token = localStorage.getItem("accesstoken");
-    this.state = {
-      tokenExists: this.token ? true : false,
-      stateValid: false,
-      urlState: null,
-      codeChallenge: null,
-      validState: true,
-    };
-  }
+  token = localStorage.getItem("accesstoken");
+  state = {
+    tokenExists: this.token ? true : false,
+    stateValid: false,
+    urlState: null,
+    codeChallenge: null,
+    validState: true,
+  };
 
   async componentDidMount() {
     if (this.token === null) {
@@ -177,7 +174,6 @@ class App extends React.Component {
           {this.state.validState && this.state.tokenExists && (
             <BubblesList token={this.token} logout={this.logout} />
           )}
-          {/* TODO: create a shim page here to handle the time between setting tokenExists to true and actually getting the token */}
         </header>
       </div>
     );
