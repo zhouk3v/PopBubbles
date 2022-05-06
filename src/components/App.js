@@ -27,12 +27,18 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (this.token === null) {
       // Start the process of requesting a new token through PKCE authorization flow
-      this.handleRedirect();
+      await this.handleRedirect();
     } else {
+      // Check if our access token expired
+      const tokenObtainTime = parseInt(localStorage.getItem("tokenObtainTime"));
+      const expires_in = parseInt(localStorage.getItem("expiresin"));
       // If token is expired, renew it
+      if (Date.now() > tokenObtainTime + expires_in) {
+        await this.generateRefreshToken();
+      }
       this.setState({ tokenExists: true });
     }
   }
@@ -68,15 +74,13 @@ class App extends React.Component {
     });
 
     const json = await res.json();
-
-    // Store the access token and refresh token into local storage
-    localStorage.setItem("accesstoken", json.access_token);
+    this.storeToken(json);
 
     // Clear the url search params
     window.location.search = "";
   }
 
-  handleRedirect() {
+  async handleRedirect() {
     // Get the search parameters, if any from the url
     const params = new URL(window.location).searchParams;
     const code = params.get("code");
@@ -88,7 +92,7 @@ class App extends React.Component {
       if (sessionStorage.getItem("stateString") !== urlState) {
         this.setState({ validState: false });
       } else {
-        this.generateNewToken(code);
+        await this.generateNewToken(code);
         this.setState({ tokenExists: true });
       }
     } else {
@@ -106,6 +110,34 @@ class App extends React.Component {
         codeChallenge,
       });
     }
+  }
+
+  async generateRefreshToken() {
+    const refresh_token = localStorage.getItem("refreshtoken");
+    const res = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        client_id: clientId,
+        grant_type: "refresh_token",
+        refresh_token,
+      }),
+    });
+    const json = await res.json();
+    this.storeToken(json);
+    this.token = json.access_token;
+  }
+
+  storeToken(json) {
+    // Store the time that we get the access token
+    localStorage.setItem("tokenObtainTime", Date.now());
+
+    // Store the access token, refresh token and expiry time into local storage
+    localStorage.setItem("accesstoken", json.access_token);
+    localStorage.setItem("refreshtoken", json.refresh_token);
+    localStorage.setItem("expiresin", json.expires_in);
   }
 
   render() {
