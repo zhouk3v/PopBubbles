@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import spotify from "../api/spotify";
 import TypeSelector from "./TypeSelector";
@@ -7,6 +7,73 @@ import Bubble from "./Bubble";
 import "./css/BubblesList.css";
 import "./css/Button.css";
 
+const BubblesList = ({ token, logout }) => {
+  // State variables
+  const [type, setType] = useState("artists");
+  const [timeRange, setTimeRange] = useState("medium_term");
+  const [data, setData] = useState([]);
+
+  // Make a call to spotify API when the component mounts
+  useEffect(() => {
+    const getData = async (type, time_range) => {
+      const response = await spotify.get(`/v1/me/top/${type}`, {
+        headers: { Authorization: "Bearer " + token },
+        params: { limit: 10, time_range: time_range },
+      });
+      setData(response.data.items);
+    };
+    getData(type, timeRange);
+  }, [type, timeRange, token]);
+
+  // Callback functions for type and time range selectors
+  const onTypeSelect = (newType) => {
+    setType(newType);
+  };
+
+  const onTimeRangeSelect = (newTimeRange) => {
+    setTimeRange(newTimeRange);
+  };
+
+  // Helper function to render bubbles
+  const renderList = () => {
+    return data.map((item) => {
+      return (
+        <div id="child" key={item.id}>
+          <Bubble data={item} token={token} />
+        </div>
+      );
+    });
+  };
+
+  return (
+    <div className="background">
+      <div className="ui container">
+        <div className="selectors">
+          <TypeSelector type={type} onTypeSelect={onTypeSelect} />
+          <TimeRangeSelector
+            time_range={timeRange}
+            onTimeRangeSelect={onTimeRangeSelect}
+          />
+          <button
+            className="ui button primary"
+            onClick={() => {
+              logout();
+            }}
+          >
+            Log Out
+          </button>
+        </div>
+        <div className="header">
+          <h1>
+            Your top {data.length} {type}
+          </h1>
+        </div>
+        <div className="ui relaxed list">{renderList()}</div>
+      </div>
+    </div>
+  );
+};
+/*
 class BubblesList extends React.Component {
   // Set state to default values in Spotify API documentation
   state = { type: "artists", time_range: "medium_term", data: [] };
@@ -82,5 +149,6 @@ class BubblesList extends React.Component {
     );
   }
 }
+*/
 
 export default BubblesList;
