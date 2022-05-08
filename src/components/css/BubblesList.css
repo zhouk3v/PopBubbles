@@ -1,33 +1,33 @@
 #child {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#child:nth-child(2n+0) {
+#child:nth-child(2n + 0) {
   justify-content: right;
 }
 
-#child:nth-child(4n+0) {
+#child:nth-child(4n + 0) {
   justify-content: left;
 }
 
 .background {
-  background: linear-gradient(#F49F0A,#EFCA08)
+  background: linear-gradient(#f49f0a, #efca08);
 }
 .container {
   display: flex;
 }
 
 .header {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.header h1{
+.header h1 {
   font-size: 64px;
-  color: #FFFFFF
+  color: #ffffff;
 }
 
 .container {
@@ -38,4 +38,16 @@
   display: flex;
   justify-content: space-around;
   margin-bottom: 10px;
+}
+
+.error {
+  background: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error p {
+  font-size: 18px;
+  color: #ffffff;
 }

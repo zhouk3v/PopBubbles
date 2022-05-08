@@ -12,18 +12,28 @@ const BubblesList = ({ token, logout }) => {
   const [type, setType] = useState("artists");
   const [timeRange, setTimeRange] = useState("medium_term");
   const [data, setData] = useState([]);
+  const [error, setError] = useState("");
+  // should we store the number of elements in state?
 
   // Make a call to spotify API when the component mounts
   useEffect(() => {
     const getData = async (type, time_range) => {
-      const response = await spotify.get(`/v1/me/top/${type}`, {
-        headers: { Authorization: "Bearer " + token },
-        params: { limit: 10, time_range: time_range },
-      });
-      setData(response.data.items);
+      try {
+        const response = await spotify.get(`/v1/me/top/${type}`, {
+          headers: { Authorization: "Bearer " + token },
+          params: { limit: 10, time_range: time_range },
+        });
+        setType(type);
+        setTimeRange(time_range);
+        setData(response.data.items);
+        setError(``);
+      } catch (err) {
+        console.log(`${err}`);
+        setError(`Error with the Spotify API: (${err}) Please try again`);
+      }
     };
     getData(type, timeRange);
-  }, [type, timeRange, token]);
+  }, [type, token, timeRange]);
 
   // Callback functions for type and time range selectors
   const onTypeSelect = (newType) => {
@@ -47,6 +57,9 @@ const BubblesList = ({ token, logout }) => {
 
   return (
     <div className="background">
+      <div className="error">
+        <p>{error}</p>
+      </div>
       <div className="ui container">
         <div className="selectors">
           <TypeSelector type={type} onTypeSelect={onTypeSelect} />
@@ -73,82 +86,5 @@ const BubblesList = ({ token, logout }) => {
     </div>
   );
 };
-/*
-class BubblesList extends React.Component {
-  // Set state to default values in Spotify API documentation
-  state = { type: "artists", time_range: "medium_term", data: [] };
-
-  // Call to spotify API
-  getData = async (type, time_range) => {
-    const response = await spotify.get(`/v1/me/top/${type}`, {
-      headers: { Authorization: "Bearer " + this.props.token },
-      params: { limit: 10, time_range: time_range },
-    });
-    this.setState({
-      type: type,
-      time_range: time_range,
-      data: response.data.items,
-    });
-  };
-
-  // Callback functions for type and time range selectors
-  onTypeSelect = (type) => {
-    this.getData(type, this.state.time_range);
-  };
-
-  onTimeRangeSelect = (time_range) => {
-    this.getData(this.state.type, time_range);
-  };
-
-  // Lifecycle methods
-  componentDidMount() {
-    this.getData(this.state.type, this.state.time_range);
-  }
-
-  // Helper function to render bubbles
-  renderList() {
-    return this.state.data.map((item) => {
-      return (
-        <div id="child" key={item.id}>
-          <Bubble data={item} token={this.props.token} />
-        </div>
-      );
-    });
-  }
-
-  render() {
-    return (
-      <div className="background">
-        <div className="ui container">
-          <div className="selectors">
-            <TypeSelector
-              type={this.state.type}
-              onTypeSelect={this.onTypeSelect}
-            />
-            <TimeRangeSelector
-              time_range={this.state.time_range}
-              onTimeRangeSelect={this.onTimeRangeSelect}
-            />
-            <button
-              className="ui button primary"
-              onClick={() => {
-                this.props.logout();
-              }}
-            >
-              Log Out
-            </button>
-          </div>
-          <div className="header">
-            <h1>
-              Your top {this.state.data.length} {this.state.type}
-            </h1>
-          </div>
-          <div className="ui relaxed list">{this.renderList()}</div>
-        </div>
-      </div>
-    );
-  }
-}
-*/
 
 export default BubblesList;
