@@ -31,9 +31,9 @@ class App extends React.Component {
     } else {
       // Check if our access token expired
       const tokenObtainTime = parseInt(localStorage.getItem("tokenObtainTime"));
-      const expires_in = parseInt(localStorage.getItem("expiresin"));
+      const expires_in_sec = parseInt(localStorage.getItem("expiresin")) * 1000;
       // If token is expired, renew it
-      if (Date.now() > tokenObtainTime + expires_in) {
+      if (Date.now() > tokenObtainTime + expires_in_sec) {
         await this.generateRefreshToken();
       }
       this.setState({ tokenExists: true });
