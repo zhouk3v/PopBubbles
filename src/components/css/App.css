@@ -1,5 +1,5 @@
-#login {
-  background: linear-gradient(#F49F0A,#EFCA08);
+.login {
+  background: linear-gradient(#f49f0a, #efca08);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,17 +11,17 @@
   overflow: hidden;
 }
 
-#login h1 {
+.login h1 {
   color: #ffffff;
 }
 
-#login p {
+.login p {
   color: #ffffff;
 }
 
-#login a {
-  background: #1DB954;
-  color: #FFFFFF;
+.login a {
+  background: #1db954;
+  color: #ffffff;
   padding: 10px;
   border: none;
   border-radius: 100px 100px 100px 100px;
